@@ -5,10 +5,14 @@
 """Python interface to OpenNGC database data."""
 
 from importlib.metadata import version
-from pkg_resources import resource_filename
-
 
 __version__ = version('PyOngc')
-DBDATE = 20221023  # Version of database data
 
-DBPATH = resource_filename(__name__, 'ongc.db')
+try:
+    from importlib.resources import files
+    DBPATH = str(files(__name__) / 'ongc.db')
+except ImportError:
+    from pkg_resources import resource_filename
+    DBPATH = resource_filename(__name__, 'ongc.db')
+
+DBDATE = 20221023  # Version of database data
